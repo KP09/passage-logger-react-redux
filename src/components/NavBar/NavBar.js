@@ -55,7 +55,7 @@ class AppBarExampleComposition extends Component {
     return (
       <div>
         <AppBar
-          title="Title"
+          title="Passage Logger"
           // iconElementLeft={<IconButton><NavigationClose /></IconButton>}
           iconElementRight={this.state.logged ? <Logged /> : <Login />}
         />
