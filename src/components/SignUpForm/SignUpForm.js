@@ -11,6 +11,17 @@ export class SignUpForm extends React.Component {
       password: '',
       password_confirmation: ''
     };
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+    console.log(this.state);
   }
 
   render() {
@@ -19,25 +30,37 @@ export class SignUpForm extends React.Component {
         <Paper style={paperStyle} zDepth={2}>
           <h1>Get started!</h1>
           <TextField
+            name="email"
             hintText="john@johnson.com"
             floatingLabelText="Your email"
             value={this.state.email}
-            // onChange={this.onChange.bind(this)}
+            onChange={this.onChange}
           />
           <br/>
           <TextField
+            name="password"
             hintText="Minimum 6 characters"
             floatingLabelText="Choose a password"
             type="password"
+            value={this.state.password}
+            onChange={this.onChange}
           />
           <br/>
           <TextField
+            name="password_confirmation"
             hintText="Must match the password above"
             floatingLabelText="Confirm your password"
             type="password"
+            value={this.state.password_confirmation}
+            onChange={this.onChange}
           />
           <br/>
-          <RaisedButton label="Sign me up!" primary={true} style={buttonStyle} />
+          <RaisedButton
+            label="Sign me up!"
+            primary={true}
+            style={buttonStyle}
+            onClick={this.onSubmit}
+          />
         </Paper>
       </div>
     );
