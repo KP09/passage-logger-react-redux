@@ -5,7 +5,7 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import NavigationClose from 'material-ui/svg-icons/navigation/close';
+// import NavigationClose from 'material-ui/svg-icons/navigation/close';
 
 class Login extends Component {
   static muiName = 'FlatButton';

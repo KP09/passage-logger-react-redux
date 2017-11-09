@@ -9,7 +9,7 @@ import {
 // Internal
 import NavBar from '../../components/NavBar/NavBar';
 import { Home } from '../Home/Home';
-import { SignUp } from '../SignUp/SignUp'
+import Signup from '../Signup/Signup'
 
 export class App extends React.Component {
   render() {
@@ -19,7 +19,7 @@ export class App extends React.Component {
         <Router>
           <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/signup" exact component={SignUp} />
+            <Route path="/signup" exact component={Signup} />
           </Switch>
         </Router>
       </div>

@@ -1,6 +1,9 @@
 // External
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import { createStore, applyMiddleware } from 'redux';
 
 // Internal
 import registerServiceWorker from './registerServiceWorker';
@@ -13,10 +16,18 @@ import './styles/index.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import muiTheme from './styles/muiTheme';
 
+// Redux store
+const store = createStore(
+  (state = {}) => state, // reducer
+  applyMiddleware(thunk) // middleware
+);
+
 ReactDOM.render(
-  <MuiThemeProvider muiTheme={muiTheme}>
-    <App />
-  </MuiThemeProvider>,
+  <Provider store={store}>
+    <MuiThemeProvider muiTheme={muiTheme}>
+      <App />
+    </MuiThemeProvider>
+  </Provider>,
   document.getElementById('root'));
 
 registerServiceWorker();
