@@ -24,74 +24,94 @@ export class SignupForm extends React.Component {
         password: null,
         password_confirmation: null
       },
-      hiddenErrors: true,
+      hiddenErrors: {},
       buttonDisabled: true
     };
+    // Delegators
     this.onChange = this.onChange.bind(this);
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.onBlur.bind(this);
+    // Private
+    this.onInput = this.onInput.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.setErrorMessage = this.setErrorMessage.bind(this);
     this.clearErrorMessage = this.clearErrorMessage.bind(this);
+    this.setHiddenErrorMessage = this.setHiddenErrorMessage.bind(this);
+    // this.setButtonState = this.setButtonState.bind(this);
   }
 
   isEmpty(obj) {
     for(var key in obj) {
-        if(obj.hasOwnProperty(key))
-            return false;
+      if(obj.hasOwnProperty(key)) {
+        return false;
+      }
     }
     return true;
   }
 
   onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-    if (e.target.value === '') {
-      this.setState({ hiddenErrors: true });
-    }
-    this.setButtonState();
+    this.onInput(e);
+    this.setErrorMessage(e);
+    this.setHiddenErrorMessage(e);
+    // this.setButtonState();
   }
 
-  setButtonState() {
-    if (this.isEmpty(this.state.errors) && this.state.hiddenErrors === false) {
-      this.setState({buttonDisabled: false});
-    } else {
-      this.setState({buttonDisabled: true});
-    }
+  onFocus(e) {
+    this.clearErrorMessage(e);
+  }
+
+  onBlur(e) {
+    this.setErrorMessage(e);
+    this.setHiddenErrorMessage(e);
+    // this.setButtonState(e);
+  }
+
+  onInput(e) {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   onSubmit(e) {
     e.preventDefault();
-    this.setState({ errors: {} })
+    this.setState({ errors: {} });
     this.props.userSignupRequest(this.state).then( value => {
       console.log(value); // Success!
     }, error => {
-      this.setState({ errors: error.response.data.errors })
+      this.setState({ errors: error.response.data.errors });
     } );
   }
 
   setErrorMessage(e) {
     let fieldName = e.target.name.replace('_', ' ');
     fieldName = fieldName[0].toUpperCase() + fieldName.substring(1);
-
-    if ( e.target.value === '' ) {
-      this.setState({
-        errors: {
-          ...this.state.errors,
-          [e.target.name]: `${fieldName} is required`
-        },
-        buttonDisabled: true
-      });
+    if (e.target.value === '') {
+      this.setState({ errors: { ...this.state.errors, [e.target.name]: `${fieldName} is required` } });
     } else {
-      this.setState({
-        errors: _.omit(this.state.errors, e.target.name),
-        buttonDisabled: false
-      })
+      this.clearErrorMessage(e);
     }
+  }
 
-    // this.setButtonState();
+  setHiddenErrorMessage(e) {
+    if (e.target.value === '') {
+      this.setState({ hiddenErrors: { ...this.state.hiddenErrors, [e.target.name]: 'Required' } });
+    } else {
+      this.setState({ hiddenErrors: _.omit(this.state.hiddenErrors, e.target.name) });
+    }
   }
 
   clearErrorMessage(e) {
-    this.setState({ errors: _.omit(this.state.errors, e.target.name) })
-    this.setButtonState();
+    this.setState({ errors: _.omit(this.state.errors, e.target.name) });
+  }
+
+  // setButtonState() {
+  //
+  // }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (this.isEmpty(nextState.errors) && this.isEmpty(nextState.hiddenErrors)) {
+      nextState.buttonDisabled = false;
+    } else {
+      nextState.buttonDisabled = true;
+    }
   }
 
   render() {
@@ -104,10 +124,11 @@ export class SignupForm extends React.Component {
             hintText="John"
             floatingLabelText="First name"
             value={this.state.first_name}
-            onChange={this.onChange}
             errorText={this.state.errors.first_name}
-            onFocus={this.clearErrorMessage}
-            onBlur={this.setErrorMessage}
+            onChange={this.onChange}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            errorStyle={errorStyle}
           />
           <br/>
           <TextField
@@ -115,10 +136,11 @@ export class SignupForm extends React.Component {
             hintText="Johnson"
             floatingLabelText="Last name"
             value={this.state.last_name}
-            onChange={this.onChange}
             errorText={this.state.errors.last_name}
-            onFocus={this.clearErrorMessage}
-            onBlur={this.setErrorMessage}
+            onChange={this.onChange}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            errorStyle={errorStyle}
           />
           <br/>
           <TextField
@@ -126,10 +148,11 @@ export class SignupForm extends React.Component {
             hintText="john@johnson.com"
             floatingLabelText="Your email"
             value={this.state.email}
-            onChange={this.onChange}
             errorText={this.state.errors.email}
-            onFocus={this.clearErrorMessage}
-            onBlur={this.setErrorMessage}
+            onChange={this.onChange}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            errorStyle={errorStyle}
           />
           <br/>
           <TextField
@@ -138,10 +161,11 @@ export class SignupForm extends React.Component {
             floatingLabelText="Choose a password"
             type="password"
             value={this.state.password}
-            onChange={this.onChange}
             errorText={this.state.errors.password}
-            onFocus={this.clearErrorMessage}
-            onBlur={this.setErrorMessage}
+            onChange={this.onChange}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            errorStyle={errorStyle}
           />
           <br/>
           <TextField
@@ -150,10 +174,11 @@ export class SignupForm extends React.Component {
             floatingLabelText="Confirm your password"
             type="password"
             value={this.state.password_confirmation}
-            onChange={this.onChange}
             errorText={this.state.errors.password_confirmation}
-            onFocus={this.clearErrorMessage}
-            onBlur={this.setErrorMessage}
+            onChange={this.onChange}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            errorStyle={errorStyle}
           />
           <br/>
           <RaisedButton
@@ -162,6 +187,7 @@ export class SignupForm extends React.Component {
             style={buttonStyle}
             onClick={this.onSubmit}
             disabled={this.state.buttonDisabled}
+            errorStyle={errorStyle}
           />
         </Paper>
       </div>
@@ -184,4 +210,8 @@ const paperStyle = {
 
 const buttonStyle = {
   marginTop: 20
+}
+
+const errorStyle = {
+  textAlign: "left"
 }
