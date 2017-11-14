@@ -27,17 +27,15 @@ export class SignupForm extends React.Component {
       hiddenErrors: {},
       buttonDisabled: true
     };
-    // Delegators
     this.onChange = this.onChange.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
-    // Private
     this.onInput = this.onInput.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.setErrorMessage = this.setErrorMessage.bind(this);
     this.clearErrorMessage = this.clearErrorMessage.bind(this);
     this.setHiddenErrorMessage = this.setHiddenErrorMessage.bind(this);
-    // this.setButtonState = this.setButtonState.bind(this);
+    this.clearHiddenErrorMessage = this.clearHiddenErrorMessage.bind(this);
   }
 
   isEmpty(obj) {
@@ -51,9 +49,7 @@ export class SignupForm extends React.Component {
 
   onChange(e) {
     this.onInput(e);
-    this.setErrorMessage(e);
     this.setHiddenErrorMessage(e);
-    // this.setButtonState();
   }
 
   onFocus(e) {
@@ -62,8 +58,6 @@ export class SignupForm extends React.Component {
 
   onBlur(e) {
     this.setErrorMessage(e);
-    this.setHiddenErrorMessage(e);
-    // this.setButtonState(e);
   }
 
   onInput(e) {
@@ -83,8 +77,30 @@ export class SignupForm extends React.Component {
   setErrorMessage(e) {
     let fieldName = e.target.name.replace('_', ' ');
     fieldName = fieldName[0].toUpperCase() + fieldName.substring(1);
+
+    // Check for empty field
     if (e.target.value === '') {
       this.setState({ errors: { ...this.state.errors, [e.target.name]: `${fieldName} is required` } });
+    // Extra checks for email field
+    } else if (e.target.name === 'email') {
+      if (!(e.target.value.match(/.*@.*\..*/))) {
+        this.setState({ errors: { ...this.state.errors, [e.target.name]: 'Email is invalid' } });
+      } else {
+        this.clearErrorMessage(e);
+      }
+    // Extra checks for password fields
+    } else if (e.target.name === 'password') {
+      if (e.target.value.length < 6) {
+        this.setState({ errors: { ...this.state.errors, [e.target.name]: 'Password is too short' } });
+      } else {
+        this.clearErrorMessage(e);
+      }
+    } else if (e.target.name === 'password_confirmation') {
+      if (e.target.value !== this.state.password ) {
+        this.setState({ errors: { ...this.state.errors, [e.target.name]: "Passwords don't match" } });
+      } else {
+        this.clearErrorMessage(e);
+      }
     } else {
       this.clearErrorMessage(e);
     }
@@ -93,8 +109,26 @@ export class SignupForm extends React.Component {
   setHiddenErrorMessage(e) {
     if (e.target.value === '') {
       this.setState({ hiddenErrors: { ...this.state.hiddenErrors, [e.target.name]: 'Required' } });
+    } else if (e.target.name === 'email') {
+      if (!(e.target.value.match(/.*@.*\..*/))) {
+        this.setState({ hiddenErrors: { ...this.state.hiddenErrors, [e.target.name]: 'Invalid' } });
+      } else {
+        this.clearHiddenErrorMessage(e);
+      }
+    } else if (e.target.name === 'password') {
+      if (e.target.value.length < 6) {
+        this.setState({ hiddenErrors: { ...this.state.hiddenErrors, [e.target.name]: 'Too short' } });
+      } else {
+        this.clearHiddenErrorMessage(e);
+      }
+    } else if (e.target.name === 'password_confirmation') {
+      if (e.target.value !== this.state.password ) {
+        this.setState({ hiddenErrors: { ...this.state.hiddenErrors, [e.target.name]: "Doesn't match" } });
+      } else {
+        this.clearHiddenErrorMessage(e);
+      }
     } else {
-      this.setState({ hiddenErrors: _.omit(this.state.hiddenErrors, e.target.name) });
+      this.clearHiddenErrorMessage(e);
     }
   }
 
@@ -102,9 +136,9 @@ export class SignupForm extends React.Component {
     this.setState({ errors: _.omit(this.state.errors, e.target.name) });
   }
 
-  // setButtonState() {
-  //
-  // }
+  clearHiddenErrorMessage(e) {
+    this.setState({ hiddenErrors: _.omit(this.state.hiddenErrors, e.target.name) });
+  }
 
   componentWillUpdate(nextProps, nextState) {
     if (this.isEmpty(nextState.errors) && this.isEmpty(nextState.hiddenErrors)) {
