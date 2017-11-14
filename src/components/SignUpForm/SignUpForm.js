@@ -7,6 +7,7 @@ import { _ } from 'underscore';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import {green400} from 'material-ui/styles/colors';
 
 export class SignupForm extends React.Component {
   constructor(props) {
@@ -24,7 +25,13 @@ export class SignupForm extends React.Component {
         password: null,
         password_confirmation: null
       },
-      hiddenErrors: {},
+      hiddenErrors: {
+        first_name: true,
+        last_name: true,
+        email: true,
+        password: true,
+        password_confirmation: true
+      },
       buttonDisabled: true
     };
     this.onChange = this.onChange.bind(this);
@@ -83,7 +90,7 @@ export class SignupForm extends React.Component {
       this.setState({ errors: { ...this.state.errors, [e.target.name]: `${fieldName} is required` } });
     // Extra checks for email field
     } else if (e.target.name === 'email') {
-      if (!(e.target.value.match(/.*@.*\..*/))) {
+      if (!(e.target.value.match(/.+@.+\..+/))) {
         this.setState({ errors: { ...this.state.errors, [e.target.name]: 'Email is invalid' } });
       } else {
         this.clearErrorMessage(e);
@@ -163,6 +170,9 @@ export class SignupForm extends React.Component {
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             errorStyle={errorStyle}
+            underlineStyle={'first_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+            underlineFocusStyle={'first_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+            floatingLabelStyle={'first_name' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
           />
           <br/>
           <TextField
@@ -175,6 +185,9 @@ export class SignupForm extends React.Component {
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             errorStyle={errorStyle}
+            underlineStyle={'last_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+            underlineFocusStyle={'last_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+            floatingLabelStyle={'last_name' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
           />
           <br/>
           <TextField
@@ -187,6 +200,9 @@ export class SignupForm extends React.Component {
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             errorStyle={errorStyle}
+            underlineStyle={'email' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+            underlineFocusStyle={'email' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+            floatingLabelStyle={'email' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
           />
           <br/>
           <TextField
@@ -200,6 +216,9 @@ export class SignupForm extends React.Component {
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             errorStyle={errorStyle}
+            underlineStyle={'password' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+            underlineFocusStyle={'password' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+            floatingLabelStyle={'password' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
           />
           <br/>
           <TextField
@@ -213,6 +232,9 @@ export class SignupForm extends React.Component {
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             errorStyle={errorStyle}
+            underlineStyle={'password_confirmation' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+            underlineFocusStyle={'password_confirmation' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+            floatingLabelStyle={'password_confirmation' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
           />
           <br/>
           <RaisedButton
@@ -221,7 +243,6 @@ export class SignupForm extends React.Component {
             style={buttonStyle}
             onClick={this.onSubmit}
             disabled={this.state.buttonDisabled}
-            errorStyle={errorStyle}
           />
         </Paper>
       </div>
@@ -247,5 +268,15 @@ const buttonStyle = {
 }
 
 const errorStyle = {
-  textAlign: "left"
+  textAlign: "left",
+  borderWidth: 2
+}
+
+const underlineSuccessStyle = {
+  borderColor: green400,
+  borderWidth: 2
+}
+
+const floatingLabelSuccessStyle = {
+  color: green400
 }
