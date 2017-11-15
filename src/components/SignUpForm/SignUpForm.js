@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import { _ } from 'underscore';
 
 // Internal
+import { history } from '../../history';
+
+// Material UI
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -75,12 +78,18 @@ export class SignupForm extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     this.setState({ errors: {}, isLoading: true });
-    this.props.userSignupRequest(this.state).then( value => {
-      this.setState({ isLoading: false });
-      console.log(value); // Success!
-    }, error => {
-      this.setState({ errors: error.response.data.errors, isLoading: false });
-    } );
+    this.props.userSignupRequest(this.state).then(
+      value => {
+        this.setState({ isLoading: false });
+        this.props.addFlashMessage({
+          type: 'success',
+          text: 'Welcome to Passage Logger!'
+        });
+        history.push('/');
+      }, error => {
+        this.setState({ errors: error.response.data.errors, isLoading: false });
+      }
+    );
   }
 
   setErrorMessage(e) {
@@ -253,7 +262,8 @@ export class SignupForm extends React.Component {
 }
 
 SignupForm.propTypes = {
-  userSignupRequest: PropTypes.func.isRequired
+  userSignupRequest: PropTypes.func.isRequired,
+  addFlashMessage: PropTypes.func.isRequired
 }
 
 const paperStyle = {

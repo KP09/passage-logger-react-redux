@@ -8,20 +8,28 @@ import { SignupForm } from '../../components/SignupForm/SignupForm';
 
 // Actions
 import { userSignupRequest } from '../../actions/signupActions';
+import { addFlashMessage } from '../../actions/flashMessageActions';
 
 class Signup extends React.Component {
   render() {
-    const { userSignupRequest } = this.props;
+    const {
+      userSignupRequest,
+      addFlashMessage
+    } = this.props;
     return (
       <div style={divStyle}>
-        <SignupForm userSignupRequest={userSignupRequest} />
+        <SignupForm
+          userSignupRequest={userSignupRequest}
+          addFlashMessage={addFlashMessage}
+        />
       </div>
     );
   }
 }
 
 Signup.propTypes = {
-  userSignupRequest: PropTypes.func.isRequired
+  userSignupRequest: PropTypes.func.isRequired,
+  addFlashMessage: PropTypes.func.isRequired
 }
 
 const divStyle = {
@@ -29,6 +37,8 @@ const divStyle = {
 }
 
 export default connect(
-  null, // mapStateToProps, provides some data from Redux store in props object
-  { userSignupRequest } // mapDispatchToProps, specify action creators
+  // mapStateToProps, provides some data from Redux store in props object
+  null,
+  // mapDispatchToProps, specify action creators
+  { userSignupRequest, addFlashMessage}
 )(Signup);

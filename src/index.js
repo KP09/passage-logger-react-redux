@@ -3,11 +3,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { Router } from 'react-router-dom'
 
 // Internal
 import registerServiceWorker from './registerServiceWorker';
+import rootReducer from './reducers/rootReducer';
 import { App } from './containers/App/App';
+import { history } from './history';
 
 // Internal styles
 import './styles/index.css';
@@ -18,14 +21,19 @@ import muiTheme from './styles/muiTheme';
 
 // Redux store
 const store = createStore(
-  (state = {}) => state, // reducer
-  applyMiddleware(thunk) // middleware
+  rootReducer, // reducer
+  compose(
+    applyMiddleware(thunk),
+    window.devToolsExtension ? window.devToolsExtension() : f => f
+  )
 );
 
 ReactDOM.render(
   <Provider store={store}>
     <MuiThemeProvider muiTheme={muiTheme}>
-      <App />
+      <Router history={history} >
+        <App />
+      </Router>
     </MuiThemeProvider>
   </Provider>,
   document.getElementById('root'));

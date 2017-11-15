@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
+
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
@@ -13,10 +15,12 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <FlatButton {...this.props} label="Login" />
-        <a href="/signup">
+        <Link to='/'>
+          <FlatButton {...this.props} label="Login" />
+        </Link>
+        <Link to='/signup'>
           <FlatButton {...this.props} label="Sign up" />
-        </a>
+        </Link>
       </div>
     );
   }
