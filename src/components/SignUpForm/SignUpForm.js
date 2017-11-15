@@ -7,7 +7,7 @@ import { _ } from 'underscore';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import {green400} from 'material-ui/styles/colors';
+// import {green400} from 'material-ui/styles/colors';
 
 export class SignupForm extends React.Component {
   constructor(props) {
@@ -32,7 +32,8 @@ export class SignupForm extends React.Component {
         password: true,
         password_confirmation: true
       },
-      buttonDisabled: true
+      buttonDisabled: true,
+      isLoading: false
     };
     this.onChange = this.onChange.bind(this);
     this.onFocus = this.onFocus.bind(this);
@@ -73,11 +74,12 @@ export class SignupForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    this.setState({ errors: {} });
+    this.setState({ errors: {}, isLoading: true });
     this.props.userSignupRequest(this.state).then( value => {
+      this.setState({ isLoading: false });
       console.log(value); // Success!
     }, error => {
-      this.setState({ errors: error.response.data.errors });
+      this.setState({ errors: error.response.data.errors, isLoading: false });
     } );
   }
 
@@ -98,7 +100,7 @@ export class SignupForm extends React.Component {
     // Extra checks for password fields
     } else if (e.target.name === 'password') {
       if (e.target.value.length < 6) {
-        this.setState({ errors: { ...this.state.errors, [e.target.name]: 'Password is too short' } });
+        this.setState({ errors: { ...this.state.errors, [e.target.name]: 'Minimum 6 characters' } });
       } else {
         this.clearErrorMessage(e);
       }
@@ -170,9 +172,9 @@ export class SignupForm extends React.Component {
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             errorStyle={errorStyle}
-            underlineStyle={'first_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
-            underlineFocusStyle={'first_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
-            floatingLabelStyle={'first_name' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
+            // underlineStyle={'first_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+            // underlineFocusStyle={'first_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+            // floatingLabelStyle={'first_name' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
           />
           <br/>
           <TextField
@@ -185,9 +187,9 @@ export class SignupForm extends React.Component {
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             errorStyle={errorStyle}
-            underlineStyle={'last_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
-            underlineFocusStyle={'last_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
-            floatingLabelStyle={'last_name' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
+            // underlineStyle={'last_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+            // underlineFocusStyle={'last_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+            // floatingLabelStyle={'last_name' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
           />
           <br/>
           <TextField
@@ -200,9 +202,9 @@ export class SignupForm extends React.Component {
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             errorStyle={errorStyle}
-            underlineStyle={'email' in this.state.hiddenErrors ? null : underlineSuccessStyle }
-            underlineFocusStyle={'email' in this.state.hiddenErrors ? null : underlineSuccessStyle }
-            floatingLabelStyle={'email' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
+            // underlineStyle={'email' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+            // underlineFocusStyle={'email' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+            // floatingLabelStyle={'email' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
           />
           <br/>
           <TextField
@@ -216,9 +218,9 @@ export class SignupForm extends React.Component {
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             errorStyle={errorStyle}
-            underlineStyle={'password' in this.state.hiddenErrors ? null : underlineSuccessStyle }
-            underlineFocusStyle={'password' in this.state.hiddenErrors ? null : underlineSuccessStyle }
-            floatingLabelStyle={'password' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
+            // underlineStyle={'password' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+            // underlineFocusStyle={'password' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+            // floatingLabelStyle={'password' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
           />
           <br/>
           <TextField
@@ -232,9 +234,9 @@ export class SignupForm extends React.Component {
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             errorStyle={errorStyle}
-            underlineStyle={'password_confirmation' in this.state.hiddenErrors ? null : underlineSuccessStyle }
-            underlineFocusStyle={'password_confirmation' in this.state.hiddenErrors ? null : underlineSuccessStyle }
-            floatingLabelStyle={'password_confirmation' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
+            // underlineStyle={'password_confirmation' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+            // underlineFocusStyle={'password_confirmation' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+            // floatingLabelStyle={'password_confirmation' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
           />
           <br/>
           <RaisedButton
@@ -242,7 +244,7 @@ export class SignupForm extends React.Component {
             primary={true}
             style={buttonStyle}
             onClick={this.onSubmit}
-            disabled={this.state.buttonDisabled}
+            disabled={this.state.buttonDisabled || this.state.isLoading}
           />
         </Paper>
       </div>
@@ -272,11 +274,11 @@ const errorStyle = {
   borderWidth: 2
 }
 
-const underlineSuccessStyle = {
-  borderColor: green400,
-  borderWidth: 2
-}
-
-const floatingLabelSuccessStyle = {
-  color: green400
-}
+// const underlineSuccessStyle = {
+//   borderColor: green400,
+//   borderWidth: 2
+// }
+//
+// const floatingLabelSuccessStyle = {
+//   color: green400
+// }
