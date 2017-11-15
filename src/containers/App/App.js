@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-dom'
 // Internal
 import { Home } from '../Home/Home';
 import Signup from '../Signup/Signup'
+import FlashMessagesContainer from '../FlashMessagesContainer/FlashMessagesContainer';
 
 export class App extends React.Component {
   render() {
@@ -14,6 +15,7 @@ export class App extends React.Component {
           <Route path="/" exact component={Home} />
           <Route path="/signup" exact component={Signup} />
         </Switch>
+        <FlashMessagesContainer />
       </div>
     );
   }

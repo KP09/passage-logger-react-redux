@@ -82,7 +82,7 @@ export class SignupForm extends React.Component {
       value => {
         this.setState({ isLoading: false });
         this.props.addFlashMessage({
-          type: 'success',
+          style: 'success',
           text: 'Welcome to Passage Logger!'
         });
         history.push('/');
