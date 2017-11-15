@@ -104,7 +104,16 @@ export class SignupForm extends React.Component {
       if (!(e.target.value.match(/.+@.+\..+/))) {
         this.setState({ errors: { ...this.state.errors, [e.target.name]: 'Email is invalid' } });
       } else {
-        this.clearErrorMessage(e);
+        this.props.checkEmailUsed(this.state.email).then(
+          response => {
+            if (response.data.email_in_use === true) {
+              this.setState({ errors: { ...this.state.errors, email: 'Email is already in use' } });
+              this.setState({ hiddenErrors: { ...this.state.hiddenErrors, email: 'Email is already in use' } });
+            }
+          }, error => {
+            console.log(error);
+          }
+        );
       }
     // Extra checks for password fields
     } else if (e.target.name === 'password') {
@@ -263,7 +272,8 @@ export class SignupForm extends React.Component {
 
 SignupForm.propTypes = {
   userSignupRequest: PropTypes.func.isRequired,
-  addFlashMessage: PropTypes.func.isRequired
+  addFlashMessage: PropTypes.func.isRequired,
+  checkEmailUsed: PropTypes.func.isRequired
 }
 
 const paperStyle = {
