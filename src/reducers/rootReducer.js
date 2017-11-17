@@ -1,6 +1,13 @@
 import { combineReducers } from 'redux';
+
 import flashMessages from './flashMessagesReducer';
+import loading from './loadingReducer';
+import emailConfirmation from './emailConfirmationReducer';
+import userLogin from './loginReducer';
 
 export default combineReducers({
-  flashMessages
+  flashMessages,
+  loading,
+  emailConfirmation,
+  userLogin
 });

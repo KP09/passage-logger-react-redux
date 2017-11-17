@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { _ } from 'underscore';
+import { Link } from 'react-router-dom';
 
 // Internal
 import { history } from '../../history';
@@ -83,9 +84,9 @@ export class SignupForm extends React.Component {
         this.setState({ isLoading: false });
         this.props.addFlashMessage({
           style: 'success',
-          text: 'Welcome to Passage Logger!'
+          text: "We've sent you a verification email"
         });
-        history.push('/');
+        history.replace('/');
       }, error => {
         this.setState({ errors: error.response.data.errors, isLoading: false });
       }
@@ -260,10 +261,15 @@ export class SignupForm extends React.Component {
           <RaisedButton
             label="Sign me up!"
             primary={true}
+            fullWidth={true}
             style={buttonStyle}
             onClick={this.onSubmit}
             disabled={this.state.buttonDisabled || this.state.isLoading}
           />
+
+          <Link to="/login">
+            <p>Already have an account?</p>
+          </Link>
         </Paper>
       </div>
     );

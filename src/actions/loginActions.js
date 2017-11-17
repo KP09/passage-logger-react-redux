@@ -1,0 +1,32 @@
+import axios from 'axios';
+import {
+  USER_LOGIN_REQUEST,
+  SET_LOGIN_FIELD
+} from './types';
+
+export function userLoginRequest(email, password) {
+  return({
+    type: USER_LOGIN_REQUEST,
+    payload: new Promise((resolve, reject) => {
+      axios.post(
+        "http://localhost:3001/api/v1/users/login",
+        {
+          email: email,
+          password: password
+        }
+      ).then(
+        response => { resolve(response) }
+      ).catch(
+        error => { reject(error); }
+      );
+    })
+  });
+}
+
+export function setLoginField(field, value) {
+  return({
+    type: SET_LOGIN_FIELD,
+    field: field,
+    value: value
+  });
+}

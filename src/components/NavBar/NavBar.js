@@ -15,7 +15,7 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <Link to='/'>
+        <Link to='/login'>
           <FlatButton {...this.props} label="Login" />
         </Link>
         <Link to='/signup'>
