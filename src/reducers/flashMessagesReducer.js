@@ -1,5 +1,9 @@
 import shortid from 'shortid';
-import { ADD_FLASH_MESSAGE } from '../actions/types';
+import {
+  ADD_FLASH_MESSAGE,
+  CONFIRM_EMAIL,
+  FULFILLED
+} from '../actions/types';
 
 const initialState = [
   {
@@ -21,6 +25,16 @@ export default (state = initialState, action = {}) => {
           text: action.message.text
         }
       ];
+    case `${CONFIRM_EMAIL}_${FULFILLED}`:
+      return [
+        ...state,
+        {
+          id: shortid.generate(),
+          open: true,
+          style: 'success',
+          text: 'Thanks! You can now log in'
+        }
+      ]
     default: return state;
   }
 }

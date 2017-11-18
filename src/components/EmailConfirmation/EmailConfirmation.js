@@ -4,16 +4,11 @@ import PropTypes from 'prop-types';
 import LoadingContainer from '../../containers/LoadingContainer/LoadingContainer';
 
 export default class EmailConfirmation extends React.Component {
-  constructor(props) {
-    super(props);
-    this.preRender = this.preRender.bind(this);
-  }
-
   componentWillMount() {
     this.props.confirmEmail(this.props.token);
   }
 
-  preRender() {
+  render() {
     if (this.props.loading) {
       return <LoadingContainer />;
     } else if (this.props.error) {
@@ -25,17 +20,8 @@ export default class EmailConfirmation extends React.Component {
         </div>
       );
     } else {
-      this.props.addFlashMessage({
-        style: 'success',
-        text: "Thanks! You can now log in!"
-      });
       return <Redirect to='/login' />
-      // return <h1>Success</h1>
     }
-  }
-
-  render() {
-    return this.preRender();
   }
 }
 
