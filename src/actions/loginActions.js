@@ -1,7 +1,8 @@
 import axios from 'axios';
 import {
+  SET_LOGIN_FIELD,
   USER_LOGIN_REQUEST,
-  SET_LOGIN_FIELD
+  USER_LOGOUT_REQUEST
 } from './types';
 
 export function userLoginRequest(email, password) {
@@ -28,5 +29,11 @@ export function setLoginField(field, value) {
     type: SET_LOGIN_FIELD,
     field: field,
     value: value
+  });
+}
+
+export function userLogoutRequest() {
+  return({
+    type: USER_LOGOUT_REQUEST
   });
 }

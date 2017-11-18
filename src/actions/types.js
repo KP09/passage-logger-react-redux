@@ -7,9 +7,12 @@ export const ADD_FLASH_MESSAGE = 'ADD_FLASH_MESSAGE';
 // Email confirmations
 export const CONFIRM_EMAIL = 'CONFIRM_EMAIL';
 
-// Logging in
+// Logging in/out
 export const SET_LOGIN_FIELD = 'SET_LOGIN_FIELD';
+export const ENABLE_LOGIN_BUTTON = 'ENABLE_LOGIN_BUTTON';
+export const DISABLE_LOGIN_BUTTON = 'DISABLE_LOGIN_BUTTON';
 export const USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST';
+export const USER_LOGOUT_REQUEST = 'USER_LOGOUT_REQUEST';
 
 // Async
 export const PENDING = 'PENDING';

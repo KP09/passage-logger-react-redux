@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 // Internal
 import { LoginForm } from '../../components/LoginForm/LoginForm';
 import { setLoginField } from '../../actions/loginActions';
+import { userLoginRequest } from '../../actions/loginActions';
 
 // Actions
 
@@ -16,6 +17,11 @@ class LoginContainer extends React.Component {
       <div style={divStyle}>
         <LoginForm
           setLoginField={this.props.setLoginField}
+          userLoginRequest={this.props.userLoginRequest}
+          email={this.props.email}
+          password={this.props.password}
+          auth_token={this.props.auth_token}
+          error={this.props.error}
         />
       </div>
     );
@@ -23,7 +29,12 @@ class LoginContainer extends React.Component {
 }
 
 LoginContainer.propTypes = {
-  setLoginField: PropTypes.func.isRequired
+  email: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
+  auth_token: PropTypes.string,
+  error: PropTypes.string,
+  setLoginField: PropTypes.func.isRequired,
+  userLoginRequest: PropTypes.func.isRequired
 }
 
 const divStyle = {
@@ -33,7 +44,9 @@ const divStyle = {
 function mapStateToProps(state) {
   return {
     email: state.userLogin.email,
-    password: state.userLogin.password
+    password: state.userLogin.password,
+    error: state.userLogin.error,
+    auth_token: state.userLogin.auth_token
   }
 }
 
@@ -41,5 +54,8 @@ export default connect(
   // mapStateToProps, provides some data from Redux store in props object
   mapStateToProps,
   // mapDispatchToProps, specify action creators
-  { setLoginField }
+  {
+    setLoginField,
+    userLoginRequest
+  }
 )(LoginContainer);

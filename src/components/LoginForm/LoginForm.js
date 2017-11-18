@@ -1,10 +1,10 @@
 // External
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 // Internal
-// import { history } from '../../history';
+import { history } from '../../history';
 
 // Material UI
 import Paper from 'material-ui/Paper';
@@ -15,12 +15,34 @@ export class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.onChange = this.onChange.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   onChange(e) {
-    this.props.setLoginField(e.target.name, e.target.value)
+    this.props.setLoginField(e.target.name, e.target.value);
   }
 
+  onClick() {
+    this.props.userLoginRequest(this.props.email, this.props.password);
+  }
+
+  componentWillMount() {
+    if (this.props.auth_token) {
+      history.replace('/');
+    }
+  }
+
+  componentWillUpdate() {
+    if (this.props.auth_token) {
+      history.replace('/');
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.props.auth_token) {
+      history.replace('/');
+    }
+  }
   render() {
     return (
       <div>
@@ -30,8 +52,8 @@ export class LoginForm extends React.Component {
             name="email"
             hintText="john@johnson.com"
             floatingLabelText="Email"
-            // value={}
-            // errorText={}
+            value={this.props.email}
+            errorText={this.props.error}
             onChange={this.onChange}
             // onFocus={}
             // onBlur={}
@@ -42,7 +64,8 @@ export class LoginForm extends React.Component {
             name="password"
             hintText="Your password"
             floatingLabelText="Password"
-            // value={}
+            type="password"
+            value={this.props.password}
             // errorText={}
             onChange={this.onChange}
             // onFocus={}
@@ -55,7 +78,7 @@ export class LoginForm extends React.Component {
             primary={true}
             style={buttonStyle}
             fullWidth={true}
-            // onClick={}
+            onClick={this.onClick}
             // disabled={}
           />
           <Link to="/signup">
@@ -67,9 +90,14 @@ export class LoginForm extends React.Component {
   }
 }
 
-// LoginForm.propTypes = {
-//
-// }
+LoginForm.propTypes = {
+  email: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
+  auth_token: PropTypes.string,
+  error: PropTypes.string,
+  setLoginField: PropTypes.func.isRequired,
+  userLoginRequest: PropTypes.func.isRequired
+}
 
 const paperStyle = {
   height: "content",
