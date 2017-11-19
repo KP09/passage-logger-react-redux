@@ -8,12 +8,12 @@ import { Router } from 'react-router-dom'
 import logger from 'redux-logger'
 import promiseMiddleware from 'redux-promise-middleware';
 
-
 // Internal
 import registerServiceWorker from './registerServiceWorker';
 import rootReducer from './reducers/rootReducer';
 import { App } from './containers/App/App';
 import { history } from './history';
+import createCookieMiddleware from './middleware/createCookieMiddleware';
 
 // Internal styles
 import './styles/index.css';
@@ -29,6 +29,7 @@ const store = createStore(
     applyMiddleware(
       thunk,
       promiseMiddleware(),
+      createCookieMiddleware(),
       logger
     ),
     window.devToolsExtension ? window.devToolsExtension() : f => f

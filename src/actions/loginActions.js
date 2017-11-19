@@ -5,6 +5,14 @@ import {
   USER_LOGOUT_REQUEST
 } from './types';
 
+export function setLoginField(field, value) {
+  return({
+    type: SET_LOGIN_FIELD,
+    field: field,
+    value: value
+  });
+}
+
 export function userLoginRequest(email, password) {
   return({
     type: USER_LOGIN_REQUEST,
@@ -21,14 +29,6 @@ export function userLoginRequest(email, password) {
         error => { reject(error); }
       );
     })
-  });
-}
-
-export function setLoginField(field, value) {
-  return({
-    type: SET_LOGIN_FIELD,
-    field: field,
-    value: value
   });
 }
 

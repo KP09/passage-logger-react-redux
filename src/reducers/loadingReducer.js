@@ -1,26 +1,22 @@
-import {
-  PENDING,
-  FULFILLED,
-  REJECTED,
-  CONFIRM_EMAIL,
-  USER_LOGIN_REQUEST
-} from '../actions/types';
+// Whenever a Promise is pending, sets loading to true
+// When it is fulfilled/rejected, sets loading to false
 
 export default (state = false, action = {}) => {
-  switch(action.type) {
-    // Email confirmation
-    case `${CONFIRM_EMAIL}_${PENDING}`:
+  const match = action.type.match(/_([A-Z]+)$/);
+  let promise_status;
+
+  if (match) {
+    promise_status = match[1];
+  } else {
+    promise_status = null;
+  }
+
+  switch(promise_status) {
+    case "PENDING":
       return true;
-    case `${CONFIRM_EMAIL}_${FULFILLED}`:
+    case "FULFILLED":
       return false;
-    case `${CONFIRM_EMAIL}_${REJECTED}`:
-      return false;
-    // Login
-    case `${USER_LOGIN_REQUEST}_${PENDING}`:
-      return true;
-    case `${USER_LOGIN_REQUEST}_${FULFILLED}`:
-      return false;
-    case `${USER_LOGIN_REQUEST}_${REJECTED}`:
+    case "REJECTED":
       return false;
     default: return state;
   }

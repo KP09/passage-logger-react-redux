@@ -7,7 +7,7 @@ import {
   USER_LOGOUT_REQUEST
 } from '../actions/types';
 
-const initialState = {
+let initialState = {
   email: '',
   password: '',
   error: '',

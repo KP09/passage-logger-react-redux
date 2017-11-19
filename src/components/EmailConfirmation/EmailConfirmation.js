@@ -1,7 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import LoadingContainer from '../../containers/LoadingContainer/LoadingContainer';
 
 export default class EmailConfirmation extends React.Component {
   componentWillMount() {
@@ -9,9 +8,7 @@ export default class EmailConfirmation extends React.Component {
   }
 
   render() {
-    if (this.props.loading) {
-      return <LoadingContainer />;
-    } else if (this.props.error) {
+    if (this.props.error) {
       return (
         <div>
           <h1>Something went wrong</h1>
