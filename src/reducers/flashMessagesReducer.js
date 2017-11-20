@@ -2,6 +2,8 @@ import shortid from 'shortid';
 import {
   ADD_FLASH_MESSAGE,
   CONFIRM_EMAIL,
+  USER_LOGIN_REQUEST,
+  USER_LOGOUT_REQUEST,
   FULFILLED
 } from '../actions/types';
 
@@ -33,6 +35,26 @@ export default (state = initialState, action = {}) => {
           open: true,
           style: 'success',
           text: 'Thanks! You can now log in'
+        }
+      ]
+    case `${USER_LOGIN_REQUEST}_${FULFILLED}`:
+      return [
+        ...state,
+        {
+          id: shortid.generate(),
+          open: true,
+          style: 'success',
+          text: 'Welcome!'
+        }
+      ]
+    case USER_LOGOUT_REQUEST:
+      return [
+        ...state,
+        {
+          id: shortid.generate(),
+          open: true,
+          style: 'success',
+          text: 'You have been logged out'
         }
       ]
     default: return state;

@@ -6,7 +6,7 @@ export function confirmEmail(token) {
     type: CONFIRM_EMAIL,
     payload: new Promise((resolve, reject) => {
       axios.post(
-        "http://localhost:3001/api/v1/users/confirm",
+        "https://localhost:3001/api/v1/users/confirm",
         { token: token }
       ).then(
         response => { resolve(response) }

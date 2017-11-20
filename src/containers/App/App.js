@@ -5,12 +5,12 @@ import { Route, Switch } from 'react-router-dom'
 // Internal
 import { Home } from '../Home/Home';
 import Signup from '../Signup/Signup';
+import requireAuth from '../../utils/requireAuth';
 import LoginContainer from '../LoginContainer/LoginContainer';
 import FlashMessagesContainer from '../FlashMessagesContainer/FlashMessagesContainer';
 import EmailConfirmationContainer from '../EmailConfirmationContainer/EmailConfirmationContainer';
 import LoadingContainer from '../LoadingContainer/LoadingContainer';
-
-
+import PassagesContainer from '../PassagesContainer/PassagesContainer';
 
 export class App extends React.Component {
   render() {
@@ -21,6 +21,7 @@ export class App extends React.Component {
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/confirm/:token" component={EmailConfirmationContainer} />
           <Route exact path="/login" component={LoginContainer} />
+          <Route exact path="/passages" component={requireAuth(PassagesContainer)} />
         </Switch>
         <LoadingContainer />
         <FlashMessagesContainer />

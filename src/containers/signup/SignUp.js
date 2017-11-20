@@ -21,6 +21,7 @@ class Signup extends React.Component {
     return (
       <div style={divStyle}>
         <SignupForm
+          auth_token={this.props.auth_token}
           userSignupRequest={userSignupRequest}
           addFlashMessage={addFlashMessage}
           checkEmailUsed={checkEmailUsed}
@@ -33,7 +34,13 @@ class Signup extends React.Component {
 Signup.propTypes = {
   userSignupRequest: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
-  checkEmailUsed: PropTypes.func.isRequired
+  checkEmailUsed: PropTypes.func.isRequired,
+}
+
+function mapStateToProps(state) {
+  return {
+    auth_token: state.userLogin.auth_token
+  }
 }
 
 const divStyle = {
@@ -42,7 +49,7 @@ const divStyle = {
 
 export default connect(
   // mapStateToProps, provides some data from Redux store in props object
-  null,
+  mapStateToProps,
   // mapDispatchToProps, specify action creators
-  { userSignupRequest, addFlashMessage, checkEmailUsed}
+  { userSignupRequest, addFlashMessage, checkEmailUsed }
 )(Signup);

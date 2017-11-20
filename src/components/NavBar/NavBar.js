@@ -31,16 +31,16 @@ class Login extends Component {
   }
 }
 
-const Logged = (props) => (
+const Logged = ({userLogoutRequest, ...rest}) => (
   <IconMenu
-    {...props}
+    {...rest}
     iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
     targetOrigin={{horizontal: 'right', vertical: 'top'}}
     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
   >
     <MenuItem
       primaryText="Sign out"
-      onClick={props.userLogoutRequest}
+      onClick={userLogoutRequest}
     />
   </IconMenu>
 );

@@ -18,7 +18,7 @@ export function userLoginRequest(email, password) {
     type: USER_LOGIN_REQUEST,
     payload: new Promise((resolve, reject) => {
       axios.post(
-        "http://localhost:3001/api/v1/users/login",
+        "https://localhost:3001/api/v1/users/login",
         {
           email: email,
           password: password

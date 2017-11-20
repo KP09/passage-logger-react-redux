@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { _ } from 'underscore';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 // Internal
 import { history } from '../../history';
@@ -77,7 +78,6 @@ export class SignupForm extends React.Component {
   }
 
   onSubmit(e) {
-    e.preventDefault();
     this.setState({ errors: {}, isLoading: true });
     this.props.userSignupRequest(this.state).then(
       value => {
@@ -177,109 +177,117 @@ export class SignupForm extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        <Paper style={paperStyle} zDepth={2}>
-          <h1>Get started!</h1>
-          <TextField
-            name="first_name"
-            hintText="John"
-            floatingLabelText="First name"
-            value={this.state.first_name}
-            errorText={this.state.errors.first_name}
-            onChange={this.onChange}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
-            errorStyle={errorStyle}
-            // underlineStyle={'first_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
-            // underlineFocusStyle={'first_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
-            // floatingLabelStyle={'first_name' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
-          />
-          <br/>
-          <TextField
-            name="last_name"
-            hintText="Johnson"
-            floatingLabelText="Last name"
-            value={this.state.last_name}
-            errorText={this.state.errors.last_name}
-            onChange={this.onChange}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
-            errorStyle={errorStyle}
-            // underlineStyle={'last_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
-            // underlineFocusStyle={'last_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
-            // floatingLabelStyle={'last_name' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
-          />
-          <br/>
-          <TextField
-            name="email"
-            hintText="john@johnson.com"
-            floatingLabelText="Your email"
-            value={this.state.email}
-            errorText={this.state.errors.email}
-            onChange={this.onChange}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
-            errorStyle={errorStyle}
-            // underlineStyle={'email' in this.state.hiddenErrors ? null : underlineSuccessStyle }
-            // underlineFocusStyle={'email' in this.state.hiddenErrors ? null : underlineSuccessStyle }
-            // floatingLabelStyle={'email' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
-          />
-          <br/>
-          <TextField
-            name="password"
-            hintText="Minimum 6 characters"
-            floatingLabelText="Choose a password"
-            type="password"
-            value={this.state.password}
-            errorText={this.state.errors.password}
-            onChange={this.onChange}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
-            errorStyle={errorStyle}
-            // underlineStyle={'password' in this.state.hiddenErrors ? null : underlineSuccessStyle }
-            // underlineFocusStyle={'password' in this.state.hiddenErrors ? null : underlineSuccessStyle }
-            // floatingLabelStyle={'password' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
-          />
-          <br/>
-          <TextField
-            name="password_confirmation"
-            hintText="Must match the password above"
-            floatingLabelText="Confirm your password"
-            type="password"
-            value={this.state.password_confirmation}
-            errorText={this.state.errors.password_confirmation}
-            onChange={this.onChange}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
-            errorStyle={errorStyle}
-            // underlineStyle={'password_confirmation' in this.state.hiddenErrors ? null : underlineSuccessStyle }
-            // underlineFocusStyle={'password_confirmation' in this.state.hiddenErrors ? null : underlineSuccessStyle }
-            // floatingLabelStyle={'password_confirmation' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
-          />
-          <br/>
-          <RaisedButton
-            label="Sign me up!"
-            primary={true}
-            fullWidth={true}
-            style={buttonStyle}
-            onClick={this.onSubmit}
-            disabled={this.state.buttonDisabled || this.state.isLoading}
-          />
+    if (this.props.auth_token) {
+      this.props.addFlashMessage({
+        text: "You are already signed up",
+        style: "error"
+      });
+      return <Redirect to='/' />
+    } else {
+      return (
+        <div>
+          <Paper style={paperStyle} zDepth={2}>
+            <h1>Get started!</h1>
+            <TextField
+              name="first_name"
+              hintText="John"
+              floatingLabelText="First name"
+              value={this.state.first_name}
+              errorText={this.state.errors.first_name}
+              onChange={this.onChange}
+              onFocus={this.onFocus}
+              onBlur={this.onBlur}
+              errorStyle={errorStyle}
+              // underlineStyle={'first_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+              // underlineFocusStyle={'first_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+              // floatingLabelStyle={'first_name' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
+            />
+            <br/>
+            <TextField
+              name="last_name"
+              hintText="Johnson"
+              floatingLabelText="Last name"
+              value={this.state.last_name}
+              errorText={this.state.errors.last_name}
+              onChange={this.onChange}
+              onFocus={this.onFocus}
+              onBlur={this.onBlur}
+              errorStyle={errorStyle}
+              // underlineStyle={'last_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+              // underlineFocusStyle={'last_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+              // floatingLabelStyle={'last_name' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
+            />
+            <br/>
+            <TextField
+              name="email"
+              hintText="john@johnson.com"
+              floatingLabelText="Your email"
+              value={this.state.email}
+              errorText={this.state.errors.email}
+              onChange={this.onChange}
+              onFocus={this.onFocus}
+              onBlur={this.onBlur}
+              errorStyle={errorStyle}
+              // underlineStyle={'email' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+              // underlineFocusStyle={'email' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+              // floatingLabelStyle={'email' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
+            />
+            <br/>
+            <TextField
+              name="password"
+              hintText="Minimum 6 characters"
+              floatingLabelText="Choose a password"
+              type="password"
+              value={this.state.password}
+              errorText={this.state.errors.password}
+              onChange={this.onChange}
+              onFocus={this.onFocus}
+              onBlur={this.onBlur}
+              errorStyle={errorStyle}
+              // underlineStyle={'password' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+              // underlineFocusStyle={'password' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+              // floatingLabelStyle={'password' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
+            />
+            <br/>
+            <TextField
+              name="password_confirmation"
+              hintText="Must match the password above"
+              floatingLabelText="Confirm your password"
+              type="password"
+              value={this.state.password_confirmation}
+              errorText={this.state.errors.password_confirmation}
+              onChange={this.onChange}
+              onFocus={this.onFocus}
+              onBlur={this.onBlur}
+              errorStyle={errorStyle}
+              // underlineStyle={'password_confirmation' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+              // underlineFocusStyle={'password_confirmation' in this.state.hiddenErrors ? null : underlineSuccessStyle }
+              // floatingLabelStyle={'password_confirmation' in this.state.hiddenErrors ? null : floatingLabelSuccessStyle }
+            />
+            <br/>
+            <RaisedButton
+              label="Sign me up!"
+              primary={true}
+              fullWidth={true}
+              style={buttonStyle}
+              onClick={this.onSubmit}
+              disabled={this.state.buttonDisabled || this.state.isLoading}
+            />
 
-          <Link to="/login">
-            <p>Already have an account?</p>
-          </Link>
-        </Paper>
-      </div>
-    );
+            <Link to="/login">
+              <p>Already have an account?</p>
+            </Link>
+          </Paper>
+        </div>
+      );
+    }
   }
 }
 
 SignupForm.propTypes = {
   userSignupRequest: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
-  checkEmailUsed: PropTypes.func.isRequired
+  checkEmailUsed: PropTypes.func.isRequired,
 }
 
 const paperStyle = {

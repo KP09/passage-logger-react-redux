@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { LoginForm } from '../../components/LoginForm/LoginForm';
 import { setLoginField } from '../../actions/loginActions';
 import { userLoginRequest } from '../../actions/loginActions';
+import { addFlashMessage } from '../../actions/flashMessageActions';
 
 // Actions
 
@@ -18,8 +19,10 @@ class LoginContainer extends React.Component {
         <LoginForm
           setLoginField={this.props.setLoginField}
           userLoginRequest={this.props.userLoginRequest}
+          addFlashMessage={this.props.addFlashMessage}
           email={this.props.email}
           password={this.props.password}
+          rememberMe={this.props.rememberMe}
           auth_token={this.props.auth_token}
           error={this.props.error}
         />
@@ -28,23 +31,29 @@ class LoginContainer extends React.Component {
   }
 }
 
+// Prop Types
 LoginContainer.propTypes = {
   email: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
+  rememberMe: PropTypes.bool.isRequired,
   auth_token: PropTypes.string,
   error: PropTypes.string,
   setLoginField: PropTypes.func.isRequired,
-  userLoginRequest: PropTypes.func.isRequired
+  userLoginRequest: PropTypes.func.isRequired,
+  addFlashMessage: PropTypes.func.isRequired
 }
 
+// Styling
 const divStyle = {
   textAlign: "center",
 }
 
+// Redux
 function mapStateToProps(state) {
   return {
     email: state.userLogin.email,
     password: state.userLogin.password,
+    rememberMe: state.userLogin.rememberMe,
     error: state.userLogin.error,
     auth_token: state.userLogin.auth_token
   }
@@ -56,6 +65,7 @@ export default connect(
   // mapDispatchToProps, specify action creators
   {
     setLoginField,
-    userLoginRequest
+    userLoginRequest,
+    addFlashMessage
   }
 )(LoginContainer);

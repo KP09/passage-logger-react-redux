@@ -1,3 +1,6 @@
+// External
+import Cookies from 'js-cookie';
+
 import {
   PENDING,
   FULFILLED,
@@ -10,8 +13,9 @@ import {
 let initialState = {
   email: '',
   password: '',
+  rememberMe: false,
   error: '',
-  auth_token: null
+  auth_token: Cookies.get('auth_token')
 }
 
 export default (state = initialState, action = {}) => {

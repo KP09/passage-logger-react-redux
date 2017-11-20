@@ -10,7 +10,7 @@ export class FlashMessage extends React.Component {
     switch (style) {
       case 'success':
         return { backgroundColor: green400 }
-      case 'failure':
+      case 'error':
         return { backgroundColor: red400 }
       default: return null
     }
