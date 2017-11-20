@@ -9,10 +9,12 @@ import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import MenuIcon from 'material-ui/svg-icons/navigation/menu';
 // import NavigationClose from 'material-ui/svg-icons/navigation/close';
+import Divider from 'material-ui/Divider';
 
 import { userLogoutRequest } from '../../actions/loginActions';
+import { history } from '../../history'
 
 class Login extends Component {
   static muiName = 'FlatButton';
@@ -31,13 +33,32 @@ class Login extends Component {
   }
 }
 
-const Logged = ({userLogoutRequest, ...rest}) => (
+const Logged = ({
+  userLogoutRequest,
+  first_name,
+  last_name,
+  ...rest
+}) => (
   <IconMenu
     {...rest}
-    iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+    iconButtonElement={<IconButton><MenuIcon /></IconButton>}
     targetOrigin={{horizontal: 'right', vertical: 'top'}}
     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
   >
+    <MenuItem
+      primaryText="Home"
+      onClick={() => history.push('/')}
+    />
+    <MenuItem
+      primaryText="Your passages"
+      onClick={() => history.push('/passages')}
+    />
+    <Divider />
+    <MenuItem
+      primaryText="Account settings"
+      disabled={true}
+    />
+    <Divider />
     <MenuItem
       primaryText="Sign out"
       onClick={userLogoutRequest}
@@ -52,28 +73,38 @@ Logged.muiName = 'IconMenu';
  * to render different components depending on the application state.
  */
 class NavBar extends Component {
+  openDrawer() {
+
+  }
 
   render() {
     return (
       <div>
         <AppBar
           title="Passage Logger"
-          // iconElementLeft={<IconButton><NavigationClose /></IconButton>}
-          iconElementRight={this.props.userIsLoggedIn ? <Logged userLogoutRequest={this.props.userLogoutRequest}/> : <Login />}
+          showMenuIconButton={false}
+          onLeftIconButtonTouchTap={this.openDrawer}
+          iconElementRight={this.props.isAuthenticated ? <Logged userLogoutRequest={this.props.userLogoutRequest}/> : <Login />}
         />
       </div>
     );
   }
 }
 
+const styles = {
+
+}
+
 NavBar.propTypes = {
-  userIsLoggedIn: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
   userLogoutRequest: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
   return {
-    userIsLoggedIn: state.userLogin.auth_token ? true : false
+    first_name: state.userLogin.first_name,
+    last_name: state.userLogin.last_name,
+    isAuthenticated: state.userLogin.auth_token ? true : false
   }
 }
 

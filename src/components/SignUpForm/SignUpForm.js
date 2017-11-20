@@ -7,6 +7,7 @@ import { Redirect } from 'react-router-dom';
 
 // Internal
 import { history } from '../../history';
+import paperStyle from '../../styles/paperStyle';
 
 // Material UI
 import Paper from 'material-ui/Paper';
@@ -197,6 +198,7 @@ export class SignupForm extends React.Component {
               onChange={this.onChange}
               onFocus={this.onFocus}
               onBlur={this.onBlur}
+              style={textFieldStyle}
               errorStyle={errorStyle}
               // underlineStyle={'first_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
               // underlineFocusStyle={'first_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
@@ -212,6 +214,7 @@ export class SignupForm extends React.Component {
               onChange={this.onChange}
               onFocus={this.onFocus}
               onBlur={this.onBlur}
+              style={textFieldStyle}
               errorStyle={errorStyle}
               // underlineStyle={'last_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
               // underlineFocusStyle={'last_name' in this.state.hiddenErrors ? null : underlineSuccessStyle }
@@ -227,6 +230,7 @@ export class SignupForm extends React.Component {
               onChange={this.onChange}
               onFocus={this.onFocus}
               onBlur={this.onBlur}
+              style={textFieldStyle}
               errorStyle={errorStyle}
               // underlineStyle={'email' in this.state.hiddenErrors ? null : underlineSuccessStyle }
               // underlineFocusStyle={'email' in this.state.hiddenErrors ? null : underlineSuccessStyle }
@@ -243,6 +247,7 @@ export class SignupForm extends React.Component {
               onChange={this.onChange}
               onFocus={this.onFocus}
               onBlur={this.onBlur}
+              style={textFieldStyle}
               errorStyle={errorStyle}
               // underlineStyle={'password' in this.state.hiddenErrors ? null : underlineSuccessStyle }
               // underlineFocusStyle={'password' in this.state.hiddenErrors ? null : underlineSuccessStyle }
@@ -259,6 +264,7 @@ export class SignupForm extends React.Component {
               onChange={this.onChange}
               onFocus={this.onFocus}
               onBlur={this.onBlur}
+              style={textFieldStyle}
               errorStyle={errorStyle}
               // underlineStyle={'password_confirmation' in this.state.hiddenErrors ? null : underlineSuccessStyle }
               // underlineFocusStyle={'password_confirmation' in this.state.hiddenErrors ? null : underlineSuccessStyle }
@@ -290,15 +296,6 @@ SignupForm.propTypes = {
   checkEmailUsed: PropTypes.func.isRequired,
 }
 
-const paperStyle = {
-  height: "content",
-  width: "content",
-  margin: "20px",
-  textAlign: 'center',
-  display: 'inline-block',
-  padding: "20px 5%"
-};
-
 const buttonStyle = {
   marginTop: 20
 }
@@ -306,6 +303,10 @@ const buttonStyle = {
 const errorStyle = {
   textAlign: "left",
   borderWidth: 2
+}
+
+const textFieldStyle = {
+  width: "100%"
 }
 
 // const underlineSuccessStyle = {

@@ -34,6 +34,7 @@ export default (state = initialState, action = {}) => {
         ...state,
         email: '',
         password: '',
+        rememberMe: false,
         auth_token: action.payload.data.auth_token
       };
     case `${USER_LOGIN_REQUEST}_${REJECTED}`:

@@ -44,7 +44,7 @@ export default (state = initialState, action = {}) => {
           id: shortid.generate(),
           open: true,
           style: 'success',
-          text: 'Welcome!'
+          text: 'You are now logged in'
         }
       ]
     case USER_LOGOUT_REQUEST:

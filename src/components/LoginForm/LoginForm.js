@@ -10,6 +10,9 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Toggle from 'material-ui/Toggle';
 
+// Internal
+import paperStyle from '../../styles/paperStyle';
+
 export class LoginForm extends React.Component {
   constructor(props) {
     super(props);
@@ -36,11 +39,11 @@ export class LoginForm extends React.Component {
       //   text: "You are already logged in",
       //   style: "error"
       // });
-      return <Redirect to='/' />
+      return <Redirect to='/passages' />
     } else {
       return (
         <div>
-          <Paper style={paperStyle} zDepth={2}>
+          <Paper style={paperStyle} zDepth={1}>
             <h1>Log in!</h1>
             <TextField
               name="email"
@@ -52,6 +55,7 @@ export class LoginForm extends React.Component {
               // onFocus={}
               // onBlur={}
               errorStyle={errorStyle}
+              style={textFieldStyle}
             />
             <br/>
             <TextField
@@ -65,6 +69,7 @@ export class LoginForm extends React.Component {
               // onFocus={}
               // onBlur={}
               // errorStyle={}
+              style={textFieldStyle}
             />
             <br/>
             <Toggle
@@ -105,15 +110,6 @@ LoginForm.propTypes = {
   addFlashMessage: PropTypes.func.isRequired
 }
 
-const paperStyle = {
-  height: "content",
-  width: "content",
-  margin: "20px",
-  textAlign: 'center',
-  display: 'inline-block',
-  padding: "20px 5%"
-};
-
 const buttonStyle = {
   marginTop: 10
 }
@@ -126,3 +122,7 @@ const errorStyle = {
 const toggleStyle = {
   margin: "20px 0 0 0"
 };
+
+const textFieldStyle = {
+  width: "100%"
+}

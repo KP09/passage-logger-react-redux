@@ -11,7 +11,7 @@ import promiseMiddleware from 'redux-promise-middleware';
 // Internal
 import registerServiceWorker from './registerServiceWorker';
 import rootReducer from './reducers/rootReducer';
-import { App } from './containers/App/App';
+import App from './containers/App/App';
 import { history } from './history';
 import createCookieMiddleware from './middleware/createCookieMiddleware';
 
