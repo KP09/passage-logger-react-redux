@@ -46,12 +46,16 @@ const Logged = ({
     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
   >
     <MenuItem
-      primaryText="Home"
-      onClick={() => history.push('/')}
+      primaryText="Dashboard"
+      disabled={true}
     />
     <MenuItem
-      primaryText="Your passages"
+      primaryText="All passages"
       onClick={() => history.push('/passages')}
+    />
+    <MenuItem
+      primaryText="Target tracker"
+      disabled={true}
     />
     <Divider />
     <MenuItem

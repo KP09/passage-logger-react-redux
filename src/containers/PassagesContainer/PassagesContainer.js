@@ -14,7 +14,7 @@ class PassagesContainer extends React.Component {
   render() {
     return (
       <div>
-        <h1>AUTHENTICATED</h1>
+        <p>[list of all passages]</p>
         <FloatingActionButton
           style={styles.floatingActionButton}
           backgroundColor={orange400}

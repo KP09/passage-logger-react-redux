@@ -182,5 +182,5 @@ const styles = {
     paddingLeft: 16,
     marginTop: 16
   },
-  transitionDuration: 100,
+  transitionDuration: 150,
 };
