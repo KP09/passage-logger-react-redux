@@ -6,11 +6,11 @@ import {
 } from './types';
 
 export function setLoginField(field, value) {
-  return({
+  return {
     type: SET_LOGIN_FIELD,
     field: field,
     value: value
-  });
+  };
 }
 
 export function userLoginRequest(email, password) {

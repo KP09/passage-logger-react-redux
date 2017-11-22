@@ -87,6 +87,7 @@ export class LoginForm extends React.Component {
               style={buttonStyle}
               fullWidth={true}
               onClick={this.onClick}
+              type="button"
               // disabled={}
             />
             <Link to="/signup">

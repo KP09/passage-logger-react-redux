@@ -95,10 +95,6 @@ class NavBar extends Component {
   }
 }
 
-const styles = {
-
-}
-
 NavBar.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   userLogoutRequest: PropTypes.func.isRequired

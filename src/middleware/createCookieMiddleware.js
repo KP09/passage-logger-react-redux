@@ -16,8 +16,8 @@ export default function createCookieMiddleware() {
         Cookies.set(
           'auth_token',
           action.payload.data.auth_token,
-          store.getState().userLogin.rememberMe && { expires: 365 },
-          { secure: true }
+          store.getState().userLogin.rememberMe && { expires: 365 }
+          // { secure: true }
         );
         return next(action);
       case USER_LOGOUT_REQUEST:
